@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<script>
+
+
+function getPermutations(str) {
+    var permutations = [],
+        letters = str.split(''),
+        currentPosition = 0,
+        output = [];
+
+    permutate(permutations, letters, currentPosition, output);
+    return permutations;
+}
+
+function permutate(permutations, availableLetters, currentPosition, output) {
+    availableLetters.forEach(function (availableLetter, index) {
+        output[currentPosition] = availableLetter;
+
+        var availableLettersCopy = deepCopy(availableLetters);
+        availableLettersCopy.splice(index, 1);
+
+        if (0 === availableLettersCopy.length) {
+            permutations.push(output.join(''));
+        } else {
+            permutate(permutations, availableLettersCopy, currentPosition + 1, deepCopy(output));
+        }
+    });
+}
+
+function deepCopy(arrayToCopy) {
+    return JSON.parse(JSON.stringify(arrayToCopy));
+}
+
+console.log(getPermutations('mayela'));
+</script>
